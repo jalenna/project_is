@@ -1,3 +1,6 @@
+from utils.region import Region
+
+
 class Brain:
     """
     The neural network comprised of "brain-regions."
@@ -5,4 +8,5 @@ class Brain:
 
     def __init__(self) -> None:
         """Constructs the brain of this neural network."""
-        pass
+
+        self.regions: list[Region]
