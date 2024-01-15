@@ -8,7 +8,7 @@ Our project tries to recreate and assess the relevant brain regions that contrib
 - [ ] _TODO_
 
 ## Prerequisites
-- [Python](https://www.python.org/). Any version starting from 3.10 will work
+- [Python](https://www.python.org/downloads/release/python-3100/)
 
 ## Key code components
 We're following the [Black Python style guide](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html) for code formatting.
