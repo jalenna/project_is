@@ -5,7 +5,8 @@
 Our project tries to recreate and assess the relevant brain regions that contribute to risk assessment during gameplay in the card game [schnapsen](https://en.wikipedia.org/wiki/Schnapsen). It attempts to quantify and visualize the similarities between the human brain and neural networks.
 
 ## Getting started
-- [ ] _TODO_
+- Using [VSCode](https://code.visualstudio.com/): https://code.visualstudio.com/docs/sourcecontrol/intro-to-git
+- From Zip: Download it from the <span style="background-color: #2ea043; color: white"><> code</span> button above
 
 ## Prerequisites
 - [Python](https://www.python.org/downloads/release/python-3100/)
