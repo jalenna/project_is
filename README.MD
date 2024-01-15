@@ -6,7 +6,7 @@ Our project tries to recreate and assess the relevant brain regions that contrib
 
 ## Getting started
 - Using [VSCode](https://code.visualstudio.com/): https://code.visualstudio.com/docs/sourcecontrol/intro-to-git
-- From Zip: Download it from the <span style="background-color: #2ea043; color: white"><> code</span> button above
+- From Zip: Download it using the green `<> code` button above
 
 ## Prerequisites
 - [Python](https://www.python.org/downloads/release/python-3100/)
