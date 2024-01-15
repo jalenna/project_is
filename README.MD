@@ -24,7 +24,7 @@ Our project tries to recreate and assess the relevant brain regions that contrib
 - [ ] _# Missing e-mail_ Lila Bulak
 
 ## References
-[Google's Python Style Guide](https://google.github.io/styleguide/pyguide.html)
-[Modular Neural Networks](https://en.wikipedia.org/wiki/Modular_neural_network)
-[Recurrent Neural Networks](https://en.wikipedia.org/wiki/Recurrent_neural_network)
-[Risk Assessment Explanation](https://en.wikipedia.org/wiki/Risk_assessment)
+- [Google's Python Style Guide](https://google.github.io/styleguide/pyguide.html)
+- [Modular Neural Networks](https://en.wikipedia.org/wiki/Modular_neural_network)
+- [Recurrent Neural Networks](https://en.wikipedia.org/wiki/Recurrent_neural_network)
+- [Risk Assessment Explanation](https://en.wikipedia.org/wiki/Risk_assessment)
