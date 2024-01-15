@@ -7,5 +7,18 @@ Our project tries to recreate and assess the relevant brain regions that contrib
 ## Getting started
 `TODO`
 
+## Structure and usage
+- class `Brain`:
+    + Comprised of all the relevant regions in the brain
+    + Main implementation of the neural network
+- class `Region`:
+    + Base class for all regions of the brain
+    + Contains all relevant methods |> Keep in mind that the implementation **will** vary accross different regions.
+- function `main`:
+    + Main entry point of the application
+    + Application set up is done within this function
+
 ## Contact
-[Jalen Cyrus](mailto:jalennaarden@gmail.com?subject=[GitHub]%20Question)
+[Jalen Cyrus](mailto:jalennaarden@gmail.com?subject=[Project%20IS]%20Question)
+[Yo-Rell Cyrus](mailto:yorellcyrus@gmail.com?subject=[Project%20IS]%20Question)
+Lila Bulak
