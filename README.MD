@@ -25,9 +25,9 @@ We're following the [Black Python style guide](https://black.readthedocs.io/en/s
 - [ ] _# Missing e-mail_ Lila Bulak
 
 ## Acknowledgements
-- [VSCode](https://code.visualstudio.com/), code editor
-- [GitHub](https://github.com/), source and asset manager
-- [ChatGPT](https://chat.openai.com/), when the going gets rough
+- [VSCode](https://code.visualstudio.com/). Extensive code editor
+- [GitHub](https://github.com/). Source and asset manager
+- [ChatGPT](https://chat.openai.com/). Research assistant
 
 ## References
 - [Black's Python Style Guide](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html)
