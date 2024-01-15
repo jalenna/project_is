@@ -7,7 +7,8 @@ Our project tries to recreate and assess the relevant brain regions that contrib
 ## Getting started
 - [ ] _TODO_
 
-## Structure and usage
+## Code structure and usage
+We're following the [Black Python style guide](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html) for code formatting.
 - class `Brain`:
     + Comprised of all the relevant regions in the brain
     + Main implementation of the neural network
@@ -24,7 +25,7 @@ Our project tries to recreate and assess the relevant brain regions that contrib
 - [ ] _# Missing e-mail_ Lila Bulak
 
 ## References
-- [Google's Python Style Guide](https://google.github.io/styleguide/pyguide.html)
+- [Black's Python Style Guide](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html)
 - [Modular Neural Networks](https://en.wikipedia.org/wiki/Modular_neural_network)
 - [Recurrent Neural Networks](https://en.wikipedia.org/wiki/Recurrent_neural_network)
 - [Risk Assessment Explanation](https://en.wikipedia.org/wiki/Risk_assessment)
