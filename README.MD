@@ -24,6 +24,11 @@ We're following the [Black Python style guide](https://black.readthedocs.io/en/s
 - [Yo-Rell Cyrus](mailto:yorellcyrus@gmail.com?subject=[Project%20IS]%20Question)
 - [ ] _# Missing e-mail_ Lila Bulak
 
+## Acknowledgements
+- [VSCode](https://code.visualstudio.com/), code editor
+- [GitHub](https://github.com/), source and asset manager
+- [ChatGPT](https://chat.openai.com/), when the going gets rough
+
 ## References
 - [Black's Python Style Guide](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html)
 - [Modular Neural Networks](https://en.wikipedia.org/wiki/Modular_neural_network)
