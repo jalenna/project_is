@@ -4,4 +4,5 @@ class Brain:
     """
 
     def __init__(self) -> None:
+        """Constructs the brain of this neural network."""
         pass
