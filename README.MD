@@ -28,7 +28,7 @@ We're following the [Black Python style guide](https://black.readthedocs.io/en/s
 ## Contact
 - [Jalen Cyrus](mailto:jalennaarden@gmail.com?subject=[Project%20IS]%20Question)
 - [Yo-Rell Cyrus](mailto:yorellcyrus@gmail.com?subject=[Project%20IS]%20Question)
-- [ ] _# Missing e-mail_ Lila Bulak
+- [Lila Bulak](mailto:eliflilabulak@gmail.com?subject=[Project%20IS]%20Question)
 
 ## Acknowledgements
 - [VSCode](https://code.visualstudio.com/). Extensive code editor
