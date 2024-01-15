@@ -7,7 +7,7 @@ Our project tries to recreate and assess the relevant brain regions that contrib
 ## Getting started
 - [ ] _TODO_
 
-## Code structure and usage
+## Key code components
 We're following the [Black Python style guide](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html) for code formatting.
 - class `Brain`:
     + Comprised of all the relevant regions in the brain
