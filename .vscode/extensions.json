@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "ms-python.black-formatter",
+    "gruntfuggly.todo-tree",
+    "ms-python.python"
+  ]
+}
