@@ -28,6 +28,7 @@ We're following the [Black Python style guide](https://black.readthedocs.io/en/s
 - [VSCode](https://code.visualstudio.com/). Extensive code editor
 - [GitHub](https://github.com/). Source and asset manager
 - [ChatGPT](https://chat.openai.com/). Research assistant
+- [TeX Live](https://www.tug.org/texlive/quickinstall.html), TeX Enginge
 
 ## References
 - [Black's Python Style Guide](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html)
