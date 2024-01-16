@@ -1,6 +1,6 @@
 # Latex Workshop files
-report/docs/report.aux
-report/docs/report.fdb_latexmk
-report/docs/report.fls
-report/docs/report.log
-report/docs/report.synctex.gz
+docs/report/report.aux
+docs/report/report.fdb_latexmk
+docs/report/report.fls
+docs/report/report.log
+docs/report/report.synctex.gz
