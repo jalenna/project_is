@@ -19,6 +19,8 @@ Optional:
 - [TeX Live](https://www.tug.org/texlive/quickinstall.html)
 - A basic understanding of [INSERT_NN_TECHNIQUE_HERE and why it was chosen](./BRAIN_OVERVIEW.md)
 
+## Disclaimer
+#TODO
 
 ## Contact
 - [Jalen Cyrus](mailto:jalennaarden@gmail.com?subject=[Project%20IS]%20Question)
