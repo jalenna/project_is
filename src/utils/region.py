@@ -7,10 +7,11 @@ class Region:
     def __init__(self, name: str) -> None:
         """Constructs a brain region with the specified name.
 
-        Parameters:
-            - name: str -> The name of this region of the brain
+        Arguments:
+            name (str): The name of this region of the brain
 
-        Return: None
+        Returns:
+            None
         """
 
         self.name: str = name
@@ -19,10 +20,11 @@ class Region:
     def input(self, signals: list[int]) -> None:
         """Accepts the forwarded inputs into this region of the brain.
 
-        Parameters:
-            - signals: list[int] -> The impulses/data of the previous layer
+        Arguments:
+            signals (list[int]): The impulses/data of the previous layer
 
-            Return: None
+        Returns:
+            None
         """
 
         self.signals = signals
@@ -30,9 +32,11 @@ class Region:
     def output(self) -> list[int]:
         """Transfers the signals out.
 
-        Parameters: None
+        Arguments:
+            None
 
-        Returns: list[int] -> The modified signals
+        Returns:
+            list[int]: The modified signals
         """
 
         return self.signals

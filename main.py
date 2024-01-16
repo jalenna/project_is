@@ -1,9 +1,11 @@
 def main() -> int:
     """Main application entry point.
 
-    Parameters: None
+    Arguments:
+        None
 
-    Return: int -> Exit code
+    Returns:
+        int: Exit code
     """
 
     return 0
