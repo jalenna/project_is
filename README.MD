@@ -13,6 +13,8 @@ Our project aims to recreate and assess the relevant brain regions that contribu
 
 Optional:
 - [TeX Live](https://www.tug.org/texlive/quickinstall.html)
+- A basic understanding of [INSERT_NN_TECHNIQUE_HERE and why it was chosen](./BRAIN_OVERVIEW.md)
+
 
 ## Contact
 - [Jalen Cyrus](mailto:jalennaarden@gmail.com?subject=[Project%20IS]%20Question)
@@ -28,5 +30,4 @@ Optional:
 ## References
 - [Black's Python Style Guide](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html)
 - [Modular Neural Networks](https://en.wikipedia.org/wiki/Modular_neural_network)
-- [Recurrent Neural Networks](https://en.wikipedia.org/wiki/Recurrent_neural_network)
 - [Risk Assessment Explanation](https://en.wikipedia.org/wiki/Risk_assessment)
