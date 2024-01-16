@@ -29,5 +29,6 @@ Optional:
 
 ## References
 - [Black's Python Style Guide](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html)
+- [PEP 8](https://peps.python.org/pep-0008/)
 - [Modular Neural Networks](https://en.wikipedia.org/wiki/Modular_neural_network)
 - [Risk Assessment Explanation](https://en.wikipedia.org/wiki/Risk_assessment)
