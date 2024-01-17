@@ -21,6 +21,8 @@ class Brain:
         self.regions: tf.keras.Sequential = tf.keras.Sequential()
 
         self.regions.add(input_layer.get_layer())
+
+        # Add brain regions here
         self.regions.add(PFC((len(self.X[0]), len(self.y))).get_layer())
 
     def train(self):
