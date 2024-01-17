@@ -23,7 +23,9 @@ class Brain:
         self.regions.add(input_layer.get_layer())
 
         # Add brain regions here
-        self.regions.add(PFC((len(self.X[0]), len(self.y))).get_layer())
+        pfc: PFC = PFC((len(self.X[0]), len(self.y)))
+        for NN in pfc.get_layer():
+            self.regions.add(NN)
 
     def train(self):
         self.regions.compile(optimizer="adam", loss="mean_squared_error")
