@@ -24,7 +24,7 @@ class PFC(Region):
                 units=12,
                 activation="tanh",
                 input_shape=shape,
-                return_sequences=True,
+                return_sequences=False,
             ),
         ]
 

@@ -29,5 +29,5 @@ class Brain:
 
     def train(self):
         self.regions.compile(optimizer="adam", loss="mean_squared_error")
-        self.regions.fit(self.X, self.y, epochs=10)
+        self.regions.fit(self.X, self.y, epochs=20)
         self.regions.summary()
