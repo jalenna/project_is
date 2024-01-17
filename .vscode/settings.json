@@ -11,4 +11,5 @@
   },
   "editor.fontFamily": "Fira Code, 'Fira Code', Consolas, 'Courier New', monospace",
   "editor.fontLigatures": true,
+  "python.analysis.typeCheckingMode": "basic",
 }

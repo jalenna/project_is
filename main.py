@@ -1,3 +1,6 @@
+from src.brain.brain import Brain
+
+
 def main() -> int:
     """Main application entry point.
 
@@ -8,8 +11,10 @@ def main() -> int:
         int: Exit code
     """
 
+    brain: Brain = Brain()
+    brain.train()
+
     return 0
 
 
-if __name__ == "main":
-    main()
+main()

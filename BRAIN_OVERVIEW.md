@@ -40,7 +40,7 @@ _These are more inline with the parallel nature of the brain_
 GNNs operate on graph-structured data, allowing them to model relationships and dependencies more explicitly.
 Nodes in the graph can represent different elements of the game, and edges can represent relationships or interactions between them.
 GNNs can capture information from neighboring nodes, enabling more parallelized processing compared to the sequential nature of RNNs.
-- [Recurrent Neural Networks](https://en.wikipedia.org/wiki/Recurrent_neural_network) with [Attention Mechanisms](https://en.wikipedia.org/wiki/Attention_(machine_learning)):
+- [Recurrent Neural Networks](https://en.wikipedia.org/wiki/Recurrent_neural_network) (RNNs) with [Attention Mechanisms](https://en.wikipedia.org/wiki/Attention_(machine_learning)):
     - Rationale:
 Attention mechanisms allow the model to focus on specific parts of the input, simulating the brain's ability to selectively attend to relevant information.
 By incorporating attention mechanisms into an RNN or a variant like the Transformer, you can enhance the model's ability to capture dependencies in a more parallelized manner.

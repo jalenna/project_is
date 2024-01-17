@@ -4,7 +4,7 @@ class Region:
     All regions in the brain must inherit from this class.
     """
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str, shape: tuple) -> None:
         """Constructs a brain region with the specified name.
 
         Arguments:
@@ -15,9 +15,14 @@ class Region:
         """
 
         self.name: str = name
+        self.layer: any
+        self.shape = shape
         self.signals: list[int]
+        self.signals_path: str
 
-    def input(self, signals: list[int]) -> None:
+        return None
+
+    def input(self, signals_path: str) -> None:
         """Accepts the forwarded inputs into this region of the brain.
 
         Arguments:
@@ -27,7 +32,28 @@ class Region:
             None
         """
 
-        self.signals = signals
+        self.signals = signals_path
+
+        return None
+
+    def classify(self) -> None:
+        """Classification method of this region.
+        Add your checks and conditions here.
+        """
+
+        return None
+
+    def activation_function(self) -> any:
+        """Activation function used by this region.
+
+        Arguments:
+            None
+
+        Returns:
+            any: Depends on your implementation
+        """
+
+        return 0
 
     def output(self) -> list[int]:
         """Transfers the signals out.
@@ -40,3 +66,6 @@ class Region:
         """
 
         return self.signals
+
+    def get_layer(self) -> any:
+        return self.layer

@@ -1,14 +1,14 @@
 # Research Question
-**Analyze the parallels between AI decision-making in schnapsen and human approaches to risk assessment during gameplay.**
+**What are the parallels between AI decision-making in schnapsen and human approaches to risk assessment during gameplay?**
 
 ## About
 Our project aims to recreate and assess the relevant brain regions that contribute to risk assessment during gameplay in the card game [schnapsen](https://en.wikipedia.org/wiki/Schnapsen). It attempts to quantify and visualize the similarities between the human brain and neural networks.
 
 ## Getting started
 - Using [VSCode](https://code.visualstudio.com/): https://code.visualstudio.com/docs/sourcecontrol/intro-to-git
-- From Zip: Download it using the green `<> code` button above and extract the contents to a separate folder. Finally enter that folder and proceed
+- From Zip: Download it using the green `<> code` button above and extract the contents to a separate folder. Then enter that folder and proceed
 
-Open a terminal and run `python main.py`.
+Open a terminal and run `python main.py`. Alternatively, in VSCode, right-click `main.py` and click `Run Python File in Terminal`.
 
 If all went well you should see ...
 
@@ -19,6 +19,8 @@ Optional:
 - [TeX Live](https://www.tug.org/texlive/quickinstall.html)
 - A basic understanding of [INSERT_NN_TECHNIQUE_HERE and why it was chosen](./BRAIN_OVERVIEW.md)
 
+## Disclaimer
+#TODO
 
 ## Contact
 - [Jalen Cyrus](mailto:jalennaarden@gmail.com?subject=[Project%20IS]%20Question)

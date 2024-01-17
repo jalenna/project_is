@@ -4,3 +4,5 @@ docs/report/report.fdb_latexmk
 docs/report/report.fls
 docs/report/report.log
 docs/report/report.synctex.gz
+**/__pycache__/
+random_random_10k_games.txt
