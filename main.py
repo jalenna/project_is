@@ -12,7 +12,7 @@ def main() -> int:
     """
 
     brain: Brain = Brain()
-    brain.train()
+    brain.run_all()
 
     return 0
 
