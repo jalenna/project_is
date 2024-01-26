@@ -40,10 +40,29 @@ is_human: bool = True
 
 if is_human:
     with SchnapsenServer() as s:
+        # Play 25 matches for each
+        # RandBot
+        # Follower first
         bot1 = RandBot(random.Random(SEED))
-        # bot1 = s.make_gui_bot(name="mybot1")
         bot2 = s.make_gui_bot(name="Human")
         engine.play_game(bot1, bot2, random.Random(SEED))
+        # Exit
+        # # Leader first
+        # bot2 = RandBot(random.Random(SEED))
+        # bot1 = s.make_gui_bot(name="Human")
+        # engine.play_game(bot1, bot2, random.Random(SEED))
+        # # Exit
+        # # RdeepBot
+        # # Follower first
+        # bot1 = bot3
+        # bot2 = s.make_gui_bot(name="Human")
+        # engine.play_game(bot1, bot2, random.Random(SEED))
+        # # Exit
+        # # Leader first
+        # bot2 = bot3
+        # bot1 = s.make_gui_bot(name="Human")
+        # engine.play_game(bot1, bot2, random.Random(SEED))
+        # # Exit
 else:
     bots = [bot1, bot2, bot3]
     n = len(bots)
