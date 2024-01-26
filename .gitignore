@@ -9,3 +9,4 @@ random_random_10k_games.txt
 weights.*
 checkpoint
 *.keras
+log_**

@@ -56,7 +56,7 @@ class Brain:
         self.regions.compile(
             optimizer="adam", loss="mean_squared_error", metrics=["accuracy"]
         )
-        self.regions.fit(self.X, self.y, epochs=20)
+        self.regions.fit(self.X, self.y, epochs=5)
         self.regions.summary()
         return None
 
@@ -152,6 +152,7 @@ class BrainPlayingBot(Bot, Brain):
         )
 
         model_output = self.regions.predict(action_state_representations_np)
+        # print(model_output)
         winning_probabilities_of_moves = [
             outcome_prob[1] for outcome_prob in model_output
         ]
