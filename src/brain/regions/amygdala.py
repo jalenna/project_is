@@ -10,7 +10,7 @@ class Amygdala(Region):
             # Capture high-level relationships or associations in the input features that are not necessarily spatial or sequential.
             # Non-linearity and computational simplicity -> relu
             tf.keras.layers.Dense(units=8**3, activation="relu"),
-            tf.keras.layers.Reshape((-1, 1, 8**3)),
+            tf.keras.layers.Reshape((1, 1, 8**3)),
             # Conv layers can help capture spatial relationships within the features.
             tf.keras.layers.Conv2D(
                 filters=8**3,

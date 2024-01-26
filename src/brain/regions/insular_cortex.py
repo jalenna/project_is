@@ -7,13 +7,15 @@ class InsularCortex(Region):
         super().__init__("Ïnsular Cortex", shape)
 
         self.layers = [
+            tf.keras.layers.Reshape((1, 1, 8**4)),
             # Convolutional layers for processing 2D spatial data (e.g., images)
             tf.keras.layers.Conv2D(8**3, 1, activation="relu"),
             # Reduce spatial dimensions.
-            tf.keras.layers.MaxPooling2D((1, 8)),
+            tf.keras.layers.MaxPooling2D((1, 1)),
             tf.keras.layers.Conv2D(8**3, 1, activation="relu"),
-            tf.keras.layers.MaxPooling2D((1, 8)),
-            tf.keras.layers.Flatten(),
+            tf.keras.layers.MaxPooling2D((1, 1)),
+            # tf.keras.layers.Flatten(),
+            tf.keras.layers.Reshape((1, 8**3)),
             # LSTM layer for processing sequential data
             tf.keras.layers.LSTM(8**4, activation="relu", return_sequences=True),
             # Dense layers for processing flattened and sequential data
