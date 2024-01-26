@@ -1,11 +1,26 @@
 import random
 from typing import Optional
-from schnapsen.game import Bot, PlayerPerspective, Move, GameState, GamePlayEngine
+from schnapsen.game import (
+    Bot,
+    PlayerPerspective,
+    Move,
+    GameState,
+    GamePlayEngine,
+    RegularMove,
+    TrumpExchange,
+    Marriage,
+)
 from .ml_utils import get_move_feature_vector, get_state_feature_vector
 from schnapsen.bots import RandBot as rb
 from .logger import Log
 
 g_logger = Log()
+
+move_to_int: dict[Move, int] = {
+    RegularMove: 0,
+    TrumpExchange: 1,
+    Marriage: 2,
+}
 
 
 class RandBot(Bot):
@@ -19,49 +34,43 @@ class RandBot(Bot):
     def __init__(self, rand: random.Random, name: Optional[str] = None) -> None:
         super().__init__(name)
         self.rng = rand
+        # variables
+        self.ppt: list[int] = []  # Points per trick
+        self.mtpr: list[int] = []  # Move type per round
+        self.lr: list[int] = []  # Leader rate
+        self.wr: list[int] = []  # Lead rate
 
     def get_move(
         self,
         perspective: PlayerPerspective,
         leader_move: Optional[Move],
     ) -> Move:
-        # get the sate feature representation
-        state_representation = get_state_feature_vector(perspective)
-        # get the leader's move representation, even if it is None
-        leader_move_representation = get_move_feature_vector(leader_move)
-        # get all my valid moves
-        my_valid_moves = perspective.valid_moves()
-        # get the feature representations for all my valid moves
-        my_move_representations: list[list[int]] = []
-        for my_move in my_valid_moves:
-            my_move_representations.append(get_move_feature_vector(my_move))
-
-        # create all model inputs, for all bot's valid moves
-        action_state_representations: list[list[int]] = []
-
-        if perspective.am_i_leader():
-            follower_move_representation = get_move_feature_vector(None)
-            for my_move_representation in my_move_representations:
-                action_state_representations.append(
-                    state_representation
-                    + my_move_representation
-                    + follower_move_representation
-                )
-        else:
-            for my_move_representation in my_move_representations:
-                action_state_representations.append(
-                    state_representation
-                    + leader_move_representation
-                    + my_move_representation
-                )
-
         moves: list[Move] = perspective.valid_moves()
-        # move = self.rng.choice(moves)
-        chosen_i, move = self.rng.choice(list(enumerate(moves)))
+        move = self.rng.choice(moves)
 
-        g_logger.log_to_file("rand", str(action_state_representations[chosen_i]))
+        opp_score = perspective.get_opponent_score().direct_points
+        self.ppt.append(opp_score)
+
+        if leader_move:
+            self.mtpr.append(move_to_int[type(leader_move)])
+            self.lr.append(1)
+        else:
+            self.mtpr.append(-1)
+            self.lr.append(0)
+
+        if opp_score > perspective.get_my_score().direct_points:
+            self.wr.append(1)
+        else:
+            self.wr.append(0)
 
         return move
+
+    def notify_game_end(self, won: bool, perspective: PlayerPerspective):
+        g_logger.log_to_file("rand", str(self.ppt))
+        g_logger.log_to_file("rand", str(self.mtpr))
+        g_logger.log_to_file("rand", str(self.lr))
+        g_logger.log_to_file("rand", str(self.wr))
+        g_logger.log_to_file("rand", str(not won))
 
 
 class RdeepBot(Bot):
@@ -93,6 +102,11 @@ class RdeepBot(Bot):
         self.__depth = depth
         self.__rand = rand
 
+        self.ppt: list[int] = []  # Points per trick
+        self.mtpr: list[int] = []  # Move type per round
+        self.lr: list[int] = []  # Leader rate
+        self.wr: list[int] = []  # Lead rate
+
     def get_move(
         self, perspective: PlayerPerspective, leader_move: Optional[Move]
     ) -> Move:
@@ -123,39 +137,29 @@ class RdeepBot(Bot):
 
         assert best_move is not None
 
-        # get the sate feature representation
-        state_representation = get_state_feature_vector(perspective)
-        # get the leader's move representation, even if it is None
-        leader_move_representation = get_move_feature_vector(leader_move)
-        # get all my valid moves
-        my_valid_moves = perspective.valid_moves()
-        # get the feature representations for all my valid moves
-        my_move_representations: list[list[int]] = []
-        for my_move in my_valid_moves:
-            my_move_representations.append(get_move_feature_vector(my_move))
+        opp_score = perspective.get_opponent_score().direct_points
+        self.ppt.append(opp_score)
 
-        # create all model inputs, for all bot's valid moves
-        action_state_representations: list[list[int]] = []
-
-        if perspective.am_i_leader():
-            follower_move_representation = get_move_feature_vector(None)
-            for my_move_representation in my_move_representations:
-                action_state_representations.append(
-                    state_representation
-                    + my_move_representation
-                    + follower_move_representation
-                )
+        if leader_move:
+            self.mtpr.append(move_to_int[type(leader_move)])
+            self.lr.append(1)
         else:
-            for my_move_representation in my_move_representations:
-                action_state_representations.append(
-                    state_representation
-                    + leader_move_representation
-                    + my_move_representation
-                )
+            self.mtpr.append(-1)
+            self.lr.append(0)
 
-        g_logger.log_to_file("rdeep", str(action_state_representations[chosen_i]))
+        if opp_score > perspective.get_my_score().direct_points:
+            self.wr.append(1)
+        else:
+            self.wr.append(0)
 
         return best_move
+
+    def notify_game_end(self, won: bool, perspective: PlayerPerspective):
+        g_logger.log_to_file("rdeep", str(self.ppt))
+        g_logger.log_to_file("rdeep", str(self.mtpr))
+        g_logger.log_to_file("rdeep", str(self.lr))
+        g_logger.log_to_file("rdeep", str(self.wr))
+        g_logger.log_to_file("rdeep", str(not won))
 
     def __evaluate(
         self,
