@@ -10,21 +10,21 @@ class PFC(Region):
 
     def __init__(self, shape: tuple) -> None:
         super().__init__("Prefrontal Cortex", shape)
-
         self.layer = [
             # Handle initial decision making (Initial impressions)
+            # tf.keras.layers.Reshape((173, 1)),
             tf.keras.layers.SimpleRNN(
-                units=20,
-                activation="relu",
+                units=8**2,
+                activation="tanh",
                 input_shape=shape,
                 return_sequences=True,
             ),
             # Tailor decision to a more specific outcome (Deeper analysis)
             tf.keras.layers.LSTM(
-                units=12,
+                units=8**2,
                 activation="tanh",
-                input_shape=shape,
-                return_sequences=False,
+                # input_shape=shape,
+                return_sequences=True,
             ),
         ]
 

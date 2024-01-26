@@ -15,7 +15,8 @@ class Region:
         """
 
         self.name: str = name
-        self.layer: list[any]
+        self.layer: any
+        self.layers: list[any]
         self.shape = shape
         self.signals: list[int]
         self.signals_path: str
@@ -67,5 +68,8 @@ class Region:
 
         return self.signals
 
-    def get_layer(self) -> list[any]:
+    def get_layer(self) -> any:
         return self.layer
+
+    def get_layers(self) -> list[any]:
+        return self.layers

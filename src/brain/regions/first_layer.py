@@ -26,7 +26,7 @@ class FirstLayer:
             CAP: int = 0
             for line in replay_memory_file:
                 # TODO
-                if CAP > 1000:
+                if CAP > 10000:
                     break
                 CAP += 1
                 feature_string, won_label_str = line.split("||")
@@ -36,8 +36,12 @@ class FirstLayer:
                 data.append(feature_list)
                 targets.append(won_label)
 
+        # self.X = np.array(data).reshape((len(data), -1, len(data[0])))
         self.X = np.array(data).reshape((len(data), -1, len(data[0])))
+        # self.X = np.array(data)
+        # self.X = np.array(data)
         self.y = np.array(targets).reshape((-1, 1))
+        # self.y = np.array(targets)
 
         self.layer = tf.keras.layers.InputLayer(
             input_shape=(len(self.X[0]), len(self.X[0][0]))
