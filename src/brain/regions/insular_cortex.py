@@ -14,7 +14,7 @@ class InsularCortex(Region):
             # tf.keras.layers.Conv1D(nr_units, 1, activation="relu"), # Are detrimental to performance, if winning is key reduce cnn's as much as possible
             # Reduce spatial dimensions.
             # tf.keras.layers.MaxPooling1D(1),
-            tf.keras.layers.Conv1D(nr_units, 1, activation="tanh"),
+            tf.keras.layers.Conv1D(nr_units, 1, activation="relu"),
             # tf.keras.layers.MaxPooling1D(1), # introduces more "noise"
             # tf.keras.layers.Flatten(),
             tf.keras.layers.Reshape((1, nr_units)),
@@ -25,7 +25,7 @@ class InsularCortex(Region):
             # tf.keras.layers.Dense(5, activation="relu"),
             # Output layer (adjust units and activation based on your task)
             tf.keras.layers.Reshape((nr_units,)),
-            tf.keras.layers.Dense(2, activation="tanh"),
+            tf.keras.layers.Dense(2, activation="relu"),
         ]
 
         return None

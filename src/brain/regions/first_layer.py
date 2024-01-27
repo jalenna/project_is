@@ -26,7 +26,7 @@ class FirstLayer:
             CAP: int = 0
             for line in replay_memory_file:
                 # TODO
-                if CAP > 10000:
+                if CAP > 20000:
                     break
                 CAP += 1
                 feature_string, won_label_str = line.split("||")

@@ -12,11 +12,11 @@ class BasalGanglia(Region):
             tf.keras.layers.LSTM(nr_units, return_sequences=True),
             # Promote more robust learning
             tf.keras.layers.Dropout(0.2),
-            # Can improve the convergence
-            tf.keras.layers.BatchNormalization(),
+            # Can improve the convergence but, not recommend for sequential data
+            # tf.keras.layers.BatchNormalization(),
             tf.keras.layers.LSTM(nr_units, return_sequences=True),
-            tf.keras.layers.Dropout(0.2),
-            tf.keras.layers.BatchNormalization(),
+            # tf.keras.layers.Dropout(0.2),
+            # tf.keras.layers.BatchNormalization(),
         ]
 
         return None

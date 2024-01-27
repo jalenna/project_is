@@ -56,7 +56,7 @@ class Brain:
         self.regions.compile(
             optimizer="adam", loss="mean_squared_error", metrics=["accuracy"]
         )
-        self.regions.fit(self.X, self.y, epochs=5)
+        self.regions.fit(self.X, self.y, epochs=20)
         self.regions.summary()
         return None
 

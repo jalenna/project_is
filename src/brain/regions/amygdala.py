@@ -10,9 +10,10 @@ class Amygdala(Region):
 
         self.layers = [
             # Capture high-level relationships or associations in the input features that are not necessarily spatial or sequential.
+            # Balanced emotions -> sigmoid
+            tf.keras.layers.Dense(units=nr_units, activation="sigmoid"),
+            tf.keras.layers.Reshape((1, -1, nr_units)),
             # Non-linearity and computational simplicity -> relu
-            tf.keras.layers.Dense(units=nr_units, activation="relu"),
-            tf.keras.layers.Reshape((1, 1, nr_units)),
             # Conv layers can help capture spatial relationships within the features.
             tf.keras.layers.Conv2D(
                 filters=nr_units,

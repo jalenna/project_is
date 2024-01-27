@@ -27,7 +27,7 @@ import random
 from schnapsen.game import SchnapsenGamePlayEngine
 from src.utils.CONSTANTS import SEED
 
-myrepeats = 10
+myrepeats = 100
 
 bot1 = BrainPlayingBot(name="BrainBot")
 bot2 = RandBot(rand=random.Random(SEED), name="RandBot")
@@ -36,7 +36,7 @@ bot3 = RdeepBot(10, 6, random.Random(SEED), "RDeep")
 
 engine = SchnapsenGamePlayEngine()
 
-is_human: bool = True
+is_human: bool = False
 
 if is_human:
     with SchnapsenServer() as s:

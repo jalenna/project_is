@@ -1,1 +1,3 @@
-SEED: int = 42
+import random
+
+SEED: int = random.Random().choice(range(1000))
