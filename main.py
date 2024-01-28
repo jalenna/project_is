@@ -66,7 +66,41 @@ if is_human:
         # bot2 = bot3
         # bot1 = s.make_gui_bot(name="Human")
         # engine.play_game(bot1, bot2, random.Random(SEED))
-# else:
+else:
+    playedgames: int = 1
+
+    while playedgames < myrepeats:
+        engine = SchnapsenGamePlayEngine()
+        winner_id, game_points, score = engine.play_game(
+            bot1, bot2, random.Random(SETTINGS.SEED)
+        )
+
+        print(SETTINGS.SEED)
+        print("Played {} out of {:.0f} games \r".format(playedgames, myrepeats))
+
+        if playedgames % 25 == 0:
+            SETTINGS.SEED += 1
+            bot2.update_seed(SETTINGS.SEED)
+
+        playedgames += 1
+
+    playedgames = 1
+
+    while playedgames < myrepeats:
+        engine = SchnapsenGamePlayEngine()
+        winner_id, game_points, score = engine.play_game(
+            bot1, bot3, random.Random(SETTINGS.SEED)
+        )
+
+        print(SETTINGS.SEED)
+        print("Played {} out of {:.0f} games \r".format(playedgames, myrepeats))
+
+        if playedgames % 25 == 0:
+            SETTINGS.SEED += 1
+            bot3.update_seed(SETTINGS.SEED)
+
+        playedgames += 1
+
 #     # Roundrobin tournament, written by the VU, modified by us
 #     bots = [bot1, bot3]
 #     n = len(bots)
@@ -103,37 +137,3 @@ if is_human:
 
 #                 bot2.update_seed(SEED)
 #                 bot3.update_seed(SEED)
-
-playedgames: int = 1
-
-while playedgames < myrepeats:
-    engine = SchnapsenGamePlayEngine()
-    winner_id, game_points, score = engine.play_game(
-        bot1, bot2, random.Random(SETTINGS.SEED)
-    )
-
-    print(SETTINGS.SEED)
-    print("Played {} out of {:.0f} games \r".format(playedgames, myrepeats))
-
-    if playedgames % 25 == 0:
-        SETTINGS.SEED += 1
-        bot2.update_seed(SETTINGS.SEED)
-
-    playedgames += 1
-
-playedgames = 1
-
-while playedgames < myrepeats:
-    engine = SchnapsenGamePlayEngine()
-    winner_id, game_points, score = engine.play_game(
-        bot1, bot3, random.Random(SETTINGS.SEED)
-    )
-
-    print(SETTINGS.SEED)
-    print("Played {} out of {:.0f} games \r".format(playedgames, myrepeats))
-
-    if playedgames % 25 == 0:
-        SETTINGS.SEED += 1
-        bot3.update_seed(SETTINGS.SEED)
-
-    playedgames += 1
