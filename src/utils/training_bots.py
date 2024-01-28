@@ -10,12 +10,17 @@ from schnapsen.game import (
     TrumpExchange,
     Marriage,
 )
-from .ml_utils import get_move_feature_vector, get_state_feature_vector
+from src.utils.VU.ml_utils import get_move_feature_vector, get_state_feature_vector
 from schnapsen.bots import RandBot as rb
-from .logger import Log
+from src.utils.logger import Log
+from src.utils.CONSTANTS import GLOBAL_SETTINGS
 
+SETTINGS: GLOBAL_SETTINGS = GLOBAL_SETTINGS()
+
+# Initiliaze logger to be used as a singleton
 g_logger = Log()
 
+# Used for encoding our moves
 move_to_int: dict[Move, int] = {
     RegularMove: 0,
     TrumpExchange: 1,
@@ -24,17 +29,24 @@ move_to_int: dict[Move, int] = {
 
 
 class RandBot(Bot):
-    """This bot plays random moves, deterministically using the random number generator provided.
-
-    Args:
-        rand (random.Random): The random number generator used to make the random choice of cards
-        name (Optional[str]): The optional name of this bot
-    """
+    """This bot plays random moves, deterministically using the random number generator provided."""
 
     def __init__(self, rand: random.Random, name: Optional[str] = None) -> None:
+        """Initiliazer for randbot.
+
+        Arguments:
+            rand (random.Random): The random number generator used to make the random choice of cards
+            name (Optional[str]): The optional name of this bot
+
+        Returns:
+            None
+        """
+
         super().__init__(name)
+
         self.rng = rand
-        # variables
+
+        # variables to be tested
         self.ppt: list[int] = []  # Points per trick
         self.mtpr: list[int] = []  # Move type per round
         self.lr: list[int] = []  # Leader rate
@@ -46,9 +58,11 @@ class RandBot(Bot):
         leader_move: Optional[Move],
     ) -> Move:
         moves: list[Move] = perspective.valid_moves()
-        move = self.rng.choice(moves)
+        move: Move = self.rng.choice(moves)
 
-        opp_score = perspective.get_opponent_score().direct_points
+        # Capture information for logging
+        # All information is relevant to the human and AI, hence the usage of "opponent"
+        opp_score: int = perspective.get_opponent_score().direct_points
         self.ppt.append(opp_score)
 
         if leader_move:
@@ -65,12 +79,33 @@ class RandBot(Bot):
 
         return move
 
-    def notify_game_end(self, won: bool, perspective: PlayerPerspective):
+    def notify_game_end(self, won: bool, perspective: PlayerPerspective) -> None:
+        # Add all relevant constants
+        g_logger.log_to_file("SEED USED", str(SETTINGS.SEED), is_entry=False)
+        g_logger.log_to_file(
+            "TRAINING_SIZE_CAP USED", str(SETTINGS.TRAINING_SIZE_CAP), is_entry=False
+        )
+        g_logger.log_to_file(
+            "TRAINING_ITERATIONS USED",
+            str(SETTINGS.TRAINING_ITERATIONS),
+            is_entry=False,
+        )
+
+        # Log all the game's information to the file
         g_logger.log_to_file("rand", str(self.ppt))
         g_logger.log_to_file("rand", str(self.mtpr))
         g_logger.log_to_file("rand", str(self.lr))
         g_logger.log_to_file("rand", str(self.wr))
         g_logger.log_to_file("rand", str(not won))
+
+        return None
+
+    def update_seed(self, seed: int) -> None:
+        """Update the seed of this bot's randomness."""
+
+        self.rng = random.Random(seed)
+
+        return None
 
 
 class RdeepBot(Bot):
@@ -137,7 +172,9 @@ class RdeepBot(Bot):
 
         assert best_move is not None
 
-        opp_score = perspective.get_opponent_score().direct_points
+        # Capture information for logging
+        # All information is relevant to the human and AI, hence the usage of "opponent"
+        opp_score: int = perspective.get_opponent_score().direct_points
         self.ppt.append(opp_score)
 
         if leader_move:
@@ -154,12 +191,26 @@ class RdeepBot(Bot):
 
         return best_move
 
-    def notify_game_end(self, won: bool, perspective: PlayerPerspective):
+    def notify_game_end(self, won: bool, perspective: PlayerPerspective) -> None:
+        # Add all relevant constants
+        g_logger.log_to_file("SEED USED", str(SETTINGS.SEED), is_entry=False)
+        g_logger.log_to_file(
+            "TRAINING_SIZE_CAP USED", str(SETTINGS.TRAINING_SIZE_CAP), is_entry=False
+        )
+        g_logger.log_to_file(
+            "TRAINING_ITERATIONS USED",
+            str(SETTINGS.TRAINING_ITERATIONS),
+            is_entry=False,
+        )
+
+        # Log all the game's information to the file
         g_logger.log_to_file("rdeep", str(self.ppt))
         g_logger.log_to_file("rdeep", str(self.mtpr))
         g_logger.log_to_file("rdeep", str(self.lr))
         g_logger.log_to_file("rdeep", str(self.wr))
         g_logger.log_to_file("rdeep", str(not won))
+
+        return None
 
     def __evaluate(
         self,
@@ -206,6 +257,13 @@ class RdeepBot(Bot):
 
         heuristic = my_score / (my_score + opponent_score)
         return heuristic
+
+    def update_seed(self, seed: int) -> None:
+        """Update the seed of this bot's randomness."""
+
+        self.__rand = random.Random(seed)
+
+        return None
 
 
 class FirstFixedMoveThenBaseBot(Bot):
