@@ -45,6 +45,7 @@ class RandBot(Bot):
         super().__init__(name)
 
         self.rng = rand
+        self.won = False
 
         # variables to be tested
         self.ppt: list[int] = []  # Points per trick
@@ -79,7 +80,9 @@ class RandBot(Bot):
 
         return move
 
-    def notify_game_end(self, won: bool, perspective: PlayerPerspective) -> None:
+    def to_log(self) -> None:
+        """Logs the game to the file."""
+
         # Add all relevant constants
         g_logger.log_to_file("SEED USED", str(SETTINGS.SEED), is_entry=False)
         g_logger.log_to_file(
@@ -96,9 +99,18 @@ class RandBot(Bot):
         g_logger.log_to_file("rand", str(self.mtpr))
         g_logger.log_to_file("rand", str(self.lr))
         g_logger.log_to_file("rand", str(self.wr))
-        g_logger.log_to_file("rand", str(not won))
+        g_logger.log_to_file("rand", str(not self.won))
+
+        # Reset statistics
+        self.ppt = []
+        self.mtpr = []
+        self.lr = []
+        self.wr = []
 
         return None
+
+    def notify_game_end(self, won: bool, perspective: PlayerPerspective) -> None:
+        self.won = won
 
     def update_seed(self, seed: int) -> None:
         """Update the seed of this bot's randomness."""
@@ -136,6 +148,7 @@ class RdeepBot(Bot):
         self.__num_samples = num_samples
         self.__depth = depth
         self.__rand = rand
+        self.won = False
 
         self.ppt: list[int] = []  # Points per trick
         self.mtpr: list[int] = []  # Move type per round
@@ -191,7 +204,9 @@ class RdeepBot(Bot):
 
         return best_move
 
-    def notify_game_end(self, won: bool, perspective: PlayerPerspective) -> None:
+    def to_log(self) -> None:
+        """Logs the game to the file."""
+
         # Add all relevant constants
         g_logger.log_to_file("SEED USED", str(SETTINGS.SEED), is_entry=False)
         g_logger.log_to_file(
@@ -208,7 +223,18 @@ class RdeepBot(Bot):
         g_logger.log_to_file("rdeep", str(self.mtpr))
         g_logger.log_to_file("rdeep", str(self.lr))
         g_logger.log_to_file("rdeep", str(self.wr))
-        g_logger.log_to_file("rdeep", str(not won))
+        g_logger.log_to_file("rdeep", str(not self.won))
+
+        # Reset statistics
+        self.ppt = []
+        self.mtpr = []
+        self.lr = []
+        self.wr = []
+
+        return None
+
+    def notify_game_end(self, won: bool, perspective: PlayerPerspective) -> None:
+        self.won = won
 
         return None
 
