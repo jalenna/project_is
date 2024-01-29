@@ -8,6 +8,8 @@ class GLOBAL_SETTINGS:
         self._TRAINING_ITERATIONS: int = 20
         self._MODEL_SAVE_PATH: str = "ml_data/brain.keras"
         self._MODEL_WEIGHTS_PATH: str = "ml_data/weights"
+        self._HUMAN_LOGS_FILE_PATH: str = "logs/"
+        self._ML_LOGS_FILE_PATH: str = "ml_data/logs/"
 
     def __new__(cls):
         if cls._instance is None:

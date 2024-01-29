@@ -1,5 +1,9 @@
 import datetime
 
+from src.utils.CONSTANTS import GLOBAL_SETTINGS
+
+SETTINGS: GLOBAL_SETTINGS = GLOBAL_SETTINGS()
+
 
 class Log:
     """Used for logging.
@@ -10,14 +14,7 @@ class Log:
 
     def __init__(self) -> None:
         """Initializes a log class."""
-
-        # Create the file to be used throughout
-        self.filename = (
-            f"logs\\log_{datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.txt"
-        )
-        self.file = open(self.filename, "x")
-
-        self.file.close()
+        self.filename = None
 
         return None
 
@@ -38,6 +35,10 @@ class Log:
         Returns:
             None
         """
+        # Create the file to be used throughout
+        if not self.filename:
+            self.filename = f"{SETTINGS._ML_LOGS_FILE_PATH}\\log_{datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')}.txt"
+            self.file = open(self.filename, "x")
 
         try:
             self.file = open(self.filename, "a")
