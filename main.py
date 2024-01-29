@@ -187,7 +187,7 @@ if is_human:
                         }
 
 if is_bot:
-    log_file_name = os.listdir(SETTINGS._ML_LOGS_FILE_PATH)[0]
+    log_file_name = os.listdir(SETTINGS._ML_LOGS_FILE_PATH)[-1]
 
     full_path: str = os.path.join(SETTINGS._ML_LOGS_FILE_PATH, log_file_name)
 
@@ -393,11 +393,17 @@ def plot_avg_lead_rates(was_human: bool, bot_name: str) -> None:
     match_idx: int = 0 if was_human else 1
 
     avg_results: list[float] = []
+    nr_tricks: dict[int, int] = {}
+    max_trick: int = 0
+
     for _, match_info in matches[match_idx].get(bot_name, {}).items():
         nr_tricks: dict[int, int] = {}
 
         for match in match_info:
             for trick, point in enumerate(match[3]):
+                if max_trick <= trick:
+                    max_trick = trick
+
                 nr_tricks[trick] = nr_tricks.get(trick, 0) + 1
                 # If this number of trick(s) isn't yet in the list
                 if len(avg_results) <= trick:
@@ -405,9 +411,9 @@ def plot_avg_lead_rates(was_human: bool, bot_name: str) -> None:
                 else:
                     avg_results[trick] += point
 
-        # Average their points
-        for idx, _ in enumerate(avg_results):
-            avg_results[idx] = avg_results[idx] / nr_tricks[idx]
+    # Average their points
+    for idx in range(max_trick):
+        avg_results[idx] = avg_results[idx] / nr_tricks[idx]
 
     plt.plot(
         np.arange(len(avg_results)),

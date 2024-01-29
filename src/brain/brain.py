@@ -66,7 +66,7 @@ class Brain:
         self.regions.fit(self.X, self.y, epochs=SETTINGS.TRAINING_ITERATIONS)
 
         # Optional, print the overview of the model
-        # self.regions.summary()
+        self.regions.summary()
 
         return None
 
