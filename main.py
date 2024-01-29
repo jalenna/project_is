@@ -1,5 +1,7 @@
 from src.brain.brain import Brain, BrainPlayingBot
 
+# Change settings in src.utils.CONSTANTS.py
+
 
 def test_brain() -> int:
     """Run methods/tests for the brain.
@@ -20,6 +22,7 @@ def test_brain() -> int:
     return 0
 
 
+# Comment this file if you don't want to train the brain
 # test_brain()
 
 # Gameplay related code for gathering logs
@@ -43,7 +46,10 @@ engine = SchnapsenGamePlayEngine()
 is_human: bool = True
 is_bot: bool = True
 
-if False:
+is_playing_human: bool = False
+is_playing_bot: bool = False
+
+if is_playing_human:
     with SchnapsenServer() as s:
         # Play 75 matches for each
         # RandBot
@@ -67,7 +73,7 @@ if False:
         # bot2 = bot3
         # bot1 = s.make_gui_bot(name="Human")
         # engine.play_game(bot1, bot2, random.Random(SEED))
-elif False:
+elif is_playing_bot:
     playedgames: int = 0
 
     while playedgames < myrepeats // 2:
@@ -457,8 +463,9 @@ def print_avg_win_ratio(was_human: bool, bot_name: str) -> None:
     print("Average loss rate:", round(avg_loss, 3))
 
 
-# Printing for Human
 if is_human:
+    # Printing
+
     # Randbot
     print("#-----------------Stats Against Randbot-----------------#")
     print_avg_win_ratio(is_human, "rand")
@@ -483,8 +490,9 @@ if is_human:
     plot_avg_leader_rates(is_human, "rdeep")
     plot_avg_lead_rates(is_human, "rdeep")
 
-# Printing for BrainBot
 if is_bot:
+    # Printing
+
     # Randbot
     print("#-----------------Stats Against Randbot-----------------#")
     print_avg_win_ratio(False, "rand")

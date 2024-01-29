@@ -10,17 +10,19 @@ Our project aims to recreate and assess the relevant brain regions that contribu
 
 Open a terminal and run `python main.py`. Alternatively, in VSCode, right-click `main.py` and click `Run Python File in Terminal`.
 
-If all went well you should see ...
+If all went well you should see a message by tensorflow and the required files being created and displayed.
 
 ## Prerequisites
 - [Python](https://www.python.org/downloads/release/python-3100/)
+- [TensorFlow](https://www.tensorflow.org/install)
+- [Schnapsen](https://pypi.org/project/schnapsen/)
 
 Optional:
 - [TeX Live](https://www.tug.org/texlive/quickinstall.html)
-- A basic understanding of [INSERT_NN_TECHNIQUE_HERE and why it was chosen](./BRAIN_OVERVIEW.md)
+- A basic understanding of [Neural Networks](./BRAIN_OVERVIEW.md)
 
 ## Disclaimer
-#TODO
+This project aims to create a very basic and simplified version of the brain. We do not expect to recreate the entire brain and have it function in the exact way. With that being said, we do, however expect to find similarities between humans and Neural Networks in their performance during gameplay.
 
 ## Contact
 - [Jalen Cyrus](mailto:jalennaarden@gmail.com?subject=[Project%20IS]%20Question)
@@ -34,7 +36,6 @@ Optional:
 - [TeX Live](https://www.tug.org/texlive/quickinstall.html). TeX Engine
 
 ## References
-- [Black's Python Style Guide](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html)
 - [PEP 8](https://peps.python.org/pep-0008/)
 - [Modular Neural Networks](https://en.wikipedia.org/wiki/Modular_neural_network)
 - [Risk Assessment Explanation](https://en.wikipedia.org/wiki/Risk_assessment)
