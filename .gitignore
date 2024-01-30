@@ -1,9 +1,7 @@
 # Latex Workshop files
-docs/report/report.aux
-docs/report/report.fdb_latexmk
-docs/report/report.fls
-docs/report/report.log
-docs/report/report.synctex.gz
+docs/report/
+!docs/report/report.pdf
+!docs/report/report.tex
 **/__pycache__/
 random_random_10k_games.txt
 random_rdeep_10k_games.txt
