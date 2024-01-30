@@ -490,6 +490,8 @@ if is_human:
     plot_avg_leader_rates(is_human, "rdeep")
     plot_avg_lead_rates(is_human, "rdeep")
 
+    print()
+
 if is_bot:
     # Printing
 
@@ -516,3 +518,5 @@ if is_bot:
     plot_avg_ppr(False, "rdeep")
     plot_avg_leader_rates(False, "rdeep")
     plot_avg_lead_rates(False, "rdeep")
+
+    print()
