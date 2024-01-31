@@ -43,7 +43,7 @@ bot3 = RdeepBot(10, 6, random.Random(SETTINGS.SEED), "RDeep")
 
 engine = SchnapsenGamePlayEngine()
 
-is_human: bool = True
+is_human: bool = False
 is_bot: bool = True
 
 is_playing_human: bool = False
@@ -91,7 +91,13 @@ elif is_playing_bot:
             SETTINGS.SEED += 1
             bot2.update_seed(SETTINGS.SEED)
 
+            # Start as a follower now
+            bot1, bot2 = bot2, bot1
+
         playedgames += 1
+
+    # Switch them back to their original positions
+    bot1, bot2 = bot2, bot1
 
     playedgames = 0
 
@@ -106,11 +112,16 @@ elif is_playing_bot:
         print(SETTINGS.SEED)
         print("Played {} out of {:.0f} games \r".format(playedgames, myrepeats // 2))
 
-        if playedgames > 0 and playedgames % 25 == 0:
+        if playedgames > 0 and playedgames % 75 == 0:
             SETTINGS.SEED += 1
             bot3.update_seed(SETTINGS.SEED)
 
+            # Start as a leader now
+            bot1, bot3 = bot3, bot1
+
         playedgames += 1
+
+    bot1, bot3 = bot3, bot1
 
 # Format logs
 
