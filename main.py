@@ -49,6 +49,7 @@ def logs_parser(line: str, bot_name: str) -> list[int]:
     ]
 
 
+# Key: bot name, value -> Key: seed, value -> The match information, ending with a win or loss
 matches: list[dict[str, dict[int, list[list[list[int] | bool]]]]] = [{}, {}]
 
 
@@ -58,6 +59,7 @@ def file_to_match_dict(log_file, is_bot: bool) -> None:
     global matches
 
     line_indeces: dict[str, int]
+
     if is_bot:
         line_indeces = {
             "ppr": 3,
@@ -74,6 +76,7 @@ def file_to_match_dict(log_file, is_bot: bool) -> None:
             "ldr": 4,
             "w": 5,
         }
+
     all_lines: list[str] = log_file.readlines()
     line_counter: int = 0
 
@@ -144,9 +147,6 @@ is_bot: bool = True
 
 if is_human:
     log_file_paths: list[str] = os.listdir(SETTINGS.HUMAN_LOGS_FILE_PATH)
-
-    # Key: bot name, value -> Key: seed, value -> The match information, ending with a win or loss
-    matches.append({})
 
     for log_file_name in log_file_paths:
         full_path: str = os.path.join(SETTINGS.HUMAN_LOGS_FILE_PATH, log_file_name)
