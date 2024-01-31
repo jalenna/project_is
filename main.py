@@ -1,4 +1,5 @@
 from src.brain.brain import Brain, BrainPlayingBot
+from src.utils.CONSTANTS import GLOBAL_SETTINGS
 
 # Change settings in src.utils.CONSTANTS.py
 
@@ -22,113 +23,22 @@ def test_brain() -> int:
     return 0
 
 
-# Comment this file if you don't want to train the brain
+# Comment this line if you don't want to train the brain
 # test_brain()
 
-# Gameplay related code for gathering logs
+# Comment these lines if you don't want to play games
+# from src.utils.play_games import play_games
 
-from src.utils.training_bots import RdeepBot, RandBot
-from schnapsen.bots.gui.guibot import SchnapsenServer
-import random
-from schnapsen.game import SchnapsenGamePlayEngine
-from src.utils.CONSTANTS import GLOBAL_SETTINGS
-
-SETTINGS: GLOBAL_SETTINGS = GLOBAL_SETTINGS()
-
-myrepeats = 300
-
-bot1 = BrainPlayingBot(name="BrainBot")
-bot2 = RandBot(rand=random.Random(SETTINGS.SEED), name="RandBot")
-bot3 = RdeepBot(10, 6, random.Random(SETTINGS.SEED), "RDeep")
-
-engine = SchnapsenGamePlayEngine()
-
-is_human: bool = False
-is_bot: bool = True
-
-is_playing_human: bool = False
-is_playing_bot: bool = False
-
-if is_playing_human:
-    with SchnapsenServer() as s:
-        # Play 75 matches for each
-        # RandBot
-        # Follower first
-        bot1 = RandBot(random.Random(SETTINGS.SEED))
-        bot2 = s.make_gui_bot(name="Human")
-        engine.play_game(bot1, bot2, random.Random(SETTINGS.SEED))
-        #
-        # # Leader first
-        # bot2 = RandBot(random.Random(SEED))
-        # bot1 = s.make_gui_bot(name="Human")
-        # engine.play_game(bot1, bot2, random.Random(SEED))
-        #
-        # # RdeepBot
-        # # Follower first
-        # bot1 = bot3
-        # bot2 = s.make_gui_bot(name="Human")
-        # engine.play_game(bot1, bot2, random.Random(SEED))
-        #
-        # # Leader first
-        # bot2 = bot3
-        # bot1 = s.make_gui_bot(name="Human")
-        # engine.play_game(bot1, bot2, random.Random(SEED))
-elif is_playing_bot:
-    playedgames: int = 0
-
-    while playedgames < myrepeats // 2:
-        engine = SchnapsenGamePlayEngine()
-        winner_id, game_points, score = engine.play_game(
-            bot1, bot2, random.Random(SETTINGS.SEED)
-        )
-
-        bot2.to_log()
-
-        print(SETTINGS.SEED)
-        print("Played {} out of {:.0f} games \r".format(playedgames, myrepeats // 2))
-
-        if playedgames > 0 and playedgames % 75 == 0:
-            SETTINGS.SEED += 1
-            bot2.update_seed(SETTINGS.SEED)
-
-            # Start as a follower now
-            bot1, bot2 = bot2, bot1
-
-        playedgames += 1
-
-    # Switch them back to their original positions
-    bot1, bot2 = bot2, bot1
-
-    playedgames = 0
-
-    while playedgames < myrepeats // 2:
-        engine = SchnapsenGamePlayEngine()
-        winner_id, game_points, score = engine.play_game(
-            bot1, bot3, random.Random(SETTINGS.SEED)
-        )
-
-        bot3.to_log()
-
-        print(SETTINGS.SEED)
-        print("Played {} out of {:.0f} games \r".format(playedgames, myrepeats // 2))
-
-        if playedgames > 0 and playedgames % 75 == 0:
-            SETTINGS.SEED += 1
-            bot3.update_seed(SETTINGS.SEED)
-
-            # Start as a leader now
-            bot1, bot3 = bot3, bot1
-
-        playedgames += 1
-
-    bot1, bot3 = bot3, bot1
+# play_games(300)
 
 # Format logs
 
 import os
 
+SETTINGS: GLOBAL_SETTINGS = GLOBAL_SETTINGS()
 
-def logs_parser(line: str) -> list[int]:
+
+def logs_parser(line: str, bot_name: str) -> list[int]:
     return [
         int(number)
         for number in line[len("YYYY-MM-DD HH:MM:SS: ") + len(bot_name) + len(" - ") :]
@@ -141,72 +51,116 @@ def logs_parser(line: str) -> list[int]:
 
 matches: list[dict[str, dict[int, list[list[list[int] | bool]]]]] = []
 
+
+def file_to_match_dict(log_file, is_bot: bool) -> None:
+    """Formats the provided log file into a dictionary."""
+
+    global matches
+
+    line_indeces: dict[str, int]
+    if is_bot:
+        line_indeces = {
+            "ppr": 3,
+            "mtpr": 4,
+            "lr": 5,
+            "ldr": 6,
+            "w": 7,
+        }
+    else:
+        line_indeces = {
+            "ppr": 1,
+            "mtpr": 2,
+            "lr": 3,
+            "ldr": 4,
+            "w": 5,
+        }
+    all_lines: list[str] = log_file.readlines()
+    line_counter: int = 0
+
+    # Line counter is only relevant to the bot's log file
+    while line_counter < len(all_lines):
+        lines = all_lines[line_counter:]
+
+        seed_used: int = int(lines[0][len("SEED USED:") :].strip())
+        bot_name: str = lines[line_indeces["ppr"]][21:].split("-")[0].strip()
+
+        points_per_round: list[int] = logs_parser(lines[line_indeces["ppr"]], bot_name)
+
+        move_types_per_round: list[int] = logs_parser(
+            lines[line_indeces["mtpr"]], bot_name
+        )
+        leader_rate: list[int] = logs_parser(lines[line_indeces["lr"]], bot_name)
+        lead_rate: list[int] = logs_parser(lines[line_indeces["ldr"]], bot_name)
+        has_won_str: str = lines[line_indeces["w"]].strip()
+        has_won_str = has_won_str[len(has_won_str) - 5 :].strip()
+        has_won: bool = True if has_won_str == "True" else False
+
+        bot_idx: int = 0
+
+        if is_bot:
+            bot_idx = 1
+
+        match_bot = matches[bot_idx].get(bot_name, {})
+
+        if len(match_bot):
+            match_info = match_bot.get(seed_used, [])
+            if len(match_info):
+                match_info.append(
+                    [
+                        points_per_round,
+                        move_types_per_round,
+                        leader_rate,
+                        lead_rate,
+                        has_won,
+                    ]
+                )
+            else:
+                match_bot[seed_used] = [
+                    [
+                        points_per_round,
+                        move_types_per_round,
+                        leader_rate,
+                        lead_rate,
+                        has_won,
+                    ]
+                ]
+        else:
+            matches[bot_idx][bot_name] = {
+                seed_used: [
+                    [
+                        points_per_round,
+                        move_types_per_round,
+                        leader_rate,
+                        lead_rate,
+                        has_won,
+                    ]
+                ]
+            }
+        line_counter += 8
+
+
+is_human: bool = True
+is_bot: bool = True
+
 if is_human:
-    log_file_paths: list[str] = os.listdir(SETTINGS._HUMAN_LOGS_FILE_PATH)
+    log_file_paths: list[str] = os.listdir(SETTINGS.HUMAN_LOGS_FILE_PATH)
 
     # Key: bot name, value -> Key: seed, value -> The match information, ending with a win or loss
     matches.append({})
 
     for log_file_name in log_file_paths:
-        full_path: str = os.path.join(SETTINGS._HUMAN_LOGS_FILE_PATH, log_file_name)
+        full_path: str = os.path.join(SETTINGS.HUMAN_LOGS_FILE_PATH, log_file_name)
 
         # Simple error check
         if os.path.isfile(full_path):
             if log_file_name.endswith(".txt"):
                 with open(full_path) as log_file:
-                    lines: list[str] = log_file.readlines()
-
-                    seed_used: int = int(lines[0][len("SEED USED:") :].strip())
-                    bot_name: str = lines[1][21:].split("-")[0].strip()
-
-                    points_per_round: list[int] = logs_parser(lines[1])
-                    move_types_per_round: list[int] = logs_parser(lines[2])
-                    leader_rate: list[int] = logs_parser(lines[3])
-                    lead_rate: list[int] = logs_parser(lines[4])
-                    has_won_str: str = lines[5].strip()
-                    has_won_str = has_won_str[len(has_won_str) - 5 :].strip()
-                    has_won: bool = True if has_won_str == "True" else False
-
-                    match_bot = matches[0].get(bot_name, {})
-                    if len(match_bot):
-                        match_info = match_bot.get(seed_used, [])
-                        if len(match_info):
-                            match_info.append(
-                                [
-                                    points_per_round,
-                                    move_types_per_round,
-                                    leader_rate,
-                                    lead_rate,
-                                    has_won,
-                                ]
-                            )
-                        else:
-                            match_bot[seed_used] = [
-                                [
-                                    points_per_round,
-                                    move_types_per_round,
-                                    leader_rate,
-                                    lead_rate,
-                                    has_won,
-                                ]
-                            ]
-                    else:
-                        matches[0][bot_name] = {
-                            seed_used: [
-                                [
-                                    points_per_round,
-                                    move_types_per_round,
-                                    leader_rate,
-                                    lead_rate,
-                                    has_won,
-                                ]
-                            ]
-                        }
+                    file_to_match_dict(log_file, False)
 
 if is_bot:
-    log_file_name = os.listdir(SETTINGS._ML_LOGS_FILE_PATH)[-1]
+    log_file_name = os.listdir(SETTINGS.ML_LOGS_FILE_PATH)[-1]
 
-    full_path: str = os.path.join(SETTINGS._ML_LOGS_FILE_PATH, log_file_name)
+    full_path: str = os.path.join(SETTINGS.ML_LOGS_FILE_PATH, log_file_name)
 
     if len(matches) < 2:
         matches.append({})
@@ -216,60 +170,7 @@ if is_bot:
     if os.path.isfile(full_path):
         if log_file_name.endswith(".txt"):
             with open(full_path) as log_file:
-                all_lines: list[str] = log_file.readlines()
-                line_counter: int = 0
-
-                while line_counter < len(all_lines):
-                    lines = all_lines[line_counter:]
-
-                    seed_used: int = int(lines[0][len("SEED USED:") :].strip())
-                    bot_name: str = lines[3][21:].split("-")[0].strip()
-
-                    points_per_round: list[int] = logs_parser(lines[3])
-                    move_types_per_round: list[int] = logs_parser(lines[4])
-                    leader_rate: list[int] = logs_parser(lines[5])
-                    lead_rate: list[int] = logs_parser(lines[6])
-                    has_won_str: str = lines[7].strip()
-                    has_won_str = has_won_str[len(has_won_str) - 5 :].strip()
-                    has_won: bool = True if has_won_str == "True" else False
-
-                    match_bot = matches[1].get(bot_name, {})
-                    if len(match_bot):
-                        match_info = match_bot.get(seed_used, [])
-                        if len(match_info):
-                            match_info.append(
-                                [
-                                    points_per_round,
-                                    move_types_per_round,
-                                    leader_rate,
-                                    lead_rate,
-                                    has_won,
-                                ]
-                            )
-                        else:
-                            match_bot[seed_used] = [
-                                [
-                                    points_per_round,
-                                    move_types_per_round,
-                                    leader_rate,
-                                    lead_rate,
-                                    has_won,
-                                ]
-                            ]
-                    else:
-                        matches[1][bot_name] = {
-                            seed_used: [
-                                [
-                                    points_per_round,
-                                    move_types_per_round,
-                                    leader_rate,
-                                    lead_rate,
-                                    has_won,
-                                ]
-                            ]
-                        }
-                    line_counter += 8
-
+                file_to_match_dict(log_file, True)
 
 # Display logs
 
@@ -281,6 +182,8 @@ import numpy as np
 
 def plot_avg_ppr(was_human: bool, bot_name: str) -> None:
     """Plots the average number of points per round."""
+
+    global matches
 
     avg_results: list[float] = []
     nr_tricks: dict[int, int] = {}
@@ -301,7 +204,7 @@ def plot_avg_ppr(was_human: bool, bot_name: str) -> None:
                 else:
                     avg_results[trick] += point
 
-    for idx in range(max_trick):
+    for idx in range(max_trick + 1):
         avg_results[idx] = avg_results[idx] / nr_tricks[idx]
 
     plt.plot(
@@ -326,6 +229,8 @@ def plot_avg_ppr(was_human: bool, bot_name: str) -> None:
 
 def print_avg_mtpr(was_human: bool, bot_name: str) -> None:
     """Plots the average number of move types per round."""
+
+    global matches
 
     match_idx: int = 0 if was_human else 1
 
@@ -361,6 +266,8 @@ def print_avg_mtpr(was_human: bool, bot_name: str) -> None:
 def plot_avg_leader_rates(was_human: bool, bot_name: str) -> None:
     """Plots the average number of times you were a leader in a round."""
 
+    global matches
+
     match_idx: int = 0 if was_human else 1
 
     avg_results: list[float] = []
@@ -381,7 +288,7 @@ def plot_avg_leader_rates(was_human: bool, bot_name: str) -> None:
                     avg_results[trick] += point
 
     # Average their points
-    for idx in range(max_trick):
+    for idx in range(max_trick + 1):
         avg_results[idx] = avg_results[idx] / nr_tricks[idx]
 
     plt.plot(
@@ -407,6 +314,8 @@ def plot_avg_leader_rates(was_human: bool, bot_name: str) -> None:
 def plot_avg_lead_rates(was_human: bool, bot_name: str) -> None:
     """Plots the average number of times you were in the lead per trick."""
 
+    global matches
+
     match_idx: int = 0 if was_human else 1
 
     avg_results: list[float] = []
@@ -429,7 +338,7 @@ def plot_avg_lead_rates(was_human: bool, bot_name: str) -> None:
                     avg_results[trick] += point
 
     # Average their points
-    for idx in range(max_trick):
+    for idx in range(max_trick + 1):
         avg_results[idx] = avg_results[idx] / nr_tricks[idx]
 
     plt.plot(
@@ -455,6 +364,8 @@ def plot_avg_lead_rates(was_human: bool, bot_name: str) -> None:
 def print_avg_win_ratio(was_human: bool, bot_name: str) -> None:
     """Prints the average win ratio."""
 
+    global matches
+
     match_idx: int = 0 if was_human else 1
 
     avg_win: float = 0
@@ -479,27 +390,27 @@ if is_human:
 
     # Randbot
     print("#-----------------Stats Against Randbot-----------------#")
-    print_avg_win_ratio(is_human, "rand")
-    print_avg_mtpr(is_human, "rand")
+    print_avg_win_ratio(True, "rand")
+    print_avg_mtpr(True, "rand")
 
     print()
 
     # Rdeep
     print("#-----------------Stats Against Rdeep-------------------#")
-    print_avg_win_ratio(is_human, "rdeep")
-    print_avg_mtpr(is_human, "rdeep")
+    print_avg_win_ratio(True, "rdeep")
+    print_avg_mtpr(True, "rdeep")
 
     # Plotting
 
     # Randbot
-    plot_avg_ppr(is_human, "rand")
-    plot_avg_leader_rates(is_human, "rand")
-    plot_avg_lead_rates(is_human, "rand")
+    plot_avg_ppr(True, "rand")
+    plot_avg_leader_rates(True, "rand")
+    plot_avg_lead_rates(True, "rand")
 
     # Rdeep
-    plot_avg_ppr(is_human, "rdeep")
-    plot_avg_leader_rates(is_human, "rdeep")
-    plot_avg_lead_rates(is_human, "rdeep")
+    plot_avg_ppr(True, "rdeep")
+    plot_avg_leader_rates(True, "rdeep")
+    plot_avg_lead_rates(True, "rdeep")
 
     print()
 

@@ -70,3 +70,21 @@ class GLOBAL_SETTINGS:
     @MODEL_WEIGHTS_PATH.setter
     def MODEL_WEIGHTS_PATH(self, value):
         self._MODEL_WEIGHTS_PATH = value
+
+    # Getter and Setter for HUMAN_LOGS_FILE_PATH
+    @property
+    def HUMAN_LOGS_FILE_PATH(self):
+        return self._HUMAN_LOGS_FILE_PATH
+
+    @HUMAN_LOGS_FILE_PATH.setter
+    def HUMAN_LOGS_FILE_PATH(self, value):
+        self._HUMAN_LOGS_FILE_PATH = value
+
+    # Getter and Setter for ML_LOGS_FILE_PATH
+    @property
+    def ML_LOGS_FILE_PATH(self):
+        return self._ML_LOGS_FILE_PATH
+
+    @ML_LOGS_FILE_PATH.setter
+    def ML_LOGS_FILE_PATH(self, value):
+        self._ML_LOGS_FILE_PATH = value
