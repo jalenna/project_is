@@ -49,7 +49,7 @@ def logs_parser(line: str, bot_name: str) -> list[int]:
     ]
 
 
-matches: list[dict[str, dict[int, list[list[list[int] | bool]]]]] = []
+matches: list[dict[str, dict[int, list[list[list[int] | bool]]]]] = [{}, {}]
 
 
 def file_to_match_dict(log_file, is_bot: bool) -> None:
@@ -161,10 +161,6 @@ if is_bot:
     log_file_name = os.listdir(SETTINGS.ML_LOGS_FILE_PATH)[-1]
 
     full_path: str = os.path.join(SETTINGS.ML_LOGS_FILE_PATH, log_file_name)
-
-    if len(matches) < 2:
-        matches.append({})
-        matches.append({})
 
     # Simple error check
     if os.path.isfile(full_path):
