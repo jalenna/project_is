@@ -3,10 +3,8 @@ class GLOBAL_SETTINGS:
 
     def __init__(self) -> None:
         self._SEED: int = 42
-        self._TRAINING_SIZE_CAP: int = (
-            -1
-        )  # Optional, -1 has no effect. Applied in src.brain.regions.first_layer
-        self._TRAINING_SET_FILE_PATH: str = "ml_data/random_random_rdeep_10k_games.txt"
+        self._TRAINING_SIZE_CAP: int = 125_000  # Optional, -1 has no effect. Applied in src.brain.regions.first_layer
+        self._TRAINING_SET_FILE_PATH: str = "ml_data/random_rdeep_10k_games.txt"
         self._TRAINING_ITERATIONS: int = 25
         self._MODEL_SAVE_PATH: str = "ml_data/brain.keras"
         self._MODEL_WEIGHTS_PATH: str = "ml_data/weights"

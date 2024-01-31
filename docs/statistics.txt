@@ -16,21 +16,21 @@ Average number of marriage moves per round: 0.095
 
 Brainbot
 
-Rdeep training set #TODO
+Rdeep training set
 
 #-----------------Stats Against Randbot-----------------#
-Average win rate: NaN
-Average loss rate: NaN
-Average number of regular moves per round: NaN
-Average number of trump exchange moves per round: NaN
-Average number of marriage moves per round: NaN
+Average win rate: 0.687
+Average loss rate: 0.313
+Average number of regular moves per round: 3.54
+Average number of trump exchange moves per round: 0.0
+Average number of marriage moves per round: 0.353
 
 #-----------------Stats Against Rdeep-------------------#
-Average win rate: NaN
-Average loss rate: NaN
-Average number of regular moves per round: NaN
-Average number of trump exchange moves per round: NaN
-Average number of marriage moves per round: NaN
+Average win rate: 0.387
+Average loss rate: 0.613
+Average number of regular moves per round: 2.893
+Average number of trump exchange moves per round: 0.0
+Average number of marriage moves per round: 0.02
 
 Randbot training set
 
