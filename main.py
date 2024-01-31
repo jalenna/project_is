@@ -401,7 +401,7 @@ def print_avg_win_ratio(was_human: bool, bot_name: str) -> None:
 
 if is_human:
     # Printing
-    print("#                      Human Stats                      #\n")
+    print("#                     Human Stats                       #\n")
 
     # Randbot
     print("#-----------------Stats Against Randbot-----------------#")
