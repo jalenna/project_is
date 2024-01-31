@@ -3,10 +3,12 @@ docs/report/
 !docs/report/report.pdf
 !docs/report/report.tex
 **/__pycache__/
+# ML files
 random_random_10k_games.txt
 random_rdeep_10k_games.txt
-weights.*
-checkpoint
-*.keras
+# weights.*
+# checkpoint
+# *.keras
 log_**
+# Local tests
 pr1
