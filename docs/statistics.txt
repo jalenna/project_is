@@ -47,3 +47,19 @@ Average loss rate: 0.667
 Average number of regular moves per round: 1.933
 Average number of trump exchange moves per round: 0.0
 Average number of marriage moves per round: 0.507
+
+Randbot vs Randbot, Randbot vs Rdeep and Rdeep vs Rdeep training set
+
+#-----------------Stats Against Randbot-----------------#
+Average win rate: 0.76
+Average loss rate: 0.24
+Average number of regular moves per round: 4.087
+Average number of trump exchange moves per round: 0.0
+Average number of marriage moves per round: 0.213
+
+#-----------------Stats Against Rdeep-------------------#
+Average win rate: 0.327
+Average loss rate: 0.673
+Average number of regular moves per round: 2.32
+Average number of trump exchange moves per round: 0.0
+Average number of marriage moves per round: 0.533

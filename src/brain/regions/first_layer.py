@@ -44,10 +44,15 @@ class FirstLayer(Region):
         with open(file=signals_path, mode="r") as replay_memory_file:
             # Restrict training size for quick experimentation
             capacity: int = 0
+            if SETTINGS.TRAINING_SIZE_CAP == -1:
+                capacity = -1
+
             for line in replay_memory_file:
                 if capacity > SETTINGS.TRAINING_SIZE_CAP:
                     break
-                capacity += 1
+
+                if capacity != -1:
+                    capacity += 1
 
                 # Parse the data
                 feature_string, won_label_str = line.split("||")

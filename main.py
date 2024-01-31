@@ -220,6 +220,12 @@ def plot_avg_ppr(was_human: bool, bot_name: str) -> None:
     # Add a legend
     plt.legend()
 
+    # Save image
+    plt.savefig(
+        f'docs/images/{"human" if was_human else "bot"}/{bot_name}_avg_ppr.png',
+        bbox_inches="tight",
+    )
+
     plt.show()
 
 
@@ -304,6 +310,12 @@ def plot_avg_leader_rates(was_human: bool, bot_name: str) -> None:
     # Add a legend
     plt.legend()
 
+    # Save image
+    plt.savefig(
+        f'docs/images/{"human" if was_human else "bot"}/{bot_name}_avg_lr.png',
+        bbox_inches="tight",
+    )
+
     plt.show()
 
 
@@ -354,6 +366,12 @@ def plot_avg_lead_rates(was_human: bool, bot_name: str) -> None:
     # Add a legend
     plt.legend()
 
+    # Save image
+    plt.savefig(
+        f'docs/images/{"human" if was_human else "bot"}/{bot_name}_avg_ldr.png',
+        bbox_inches="tight",
+    )
+
     plt.show()
 
 
@@ -383,6 +401,7 @@ def print_avg_win_ratio(was_human: bool, bot_name: str) -> None:
 
 if is_human:
     # Printing
+    print("#                      Human Stats                      #\n")
 
     # Randbot
     print("#-----------------Stats Against Randbot-----------------#")
@@ -412,6 +431,7 @@ if is_human:
 
 if is_bot:
     # Printing
+    print("#                    Brainbot Stats                     #\n")
 
     # Randbot
     print("#-----------------Stats Against Randbot-----------------#")

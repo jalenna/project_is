@@ -6,6 +6,7 @@ docs/report/
 # ML files
 random_random_10k_games.txt
 random_rdeep_10k_games.txt
+random_random_rdeep_10k_games.txt
 # weights.*
 # checkpoint
 # *.keras
