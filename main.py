@@ -26,7 +26,7 @@ def test_brain() -> int:
 # Comment this line if you don't want to train the brain
 # test_brain()
 
-# Comment these lines if you don't want to play games
+# Comment these lines if you don't want to play games and already have log files to test on
 # from src.utils.play_games import play_games
 
 # play_games(300)
