@@ -5,8 +5,13 @@ from schnapsen.game import (
     GamePhase,
     SchnapsenDeckGenerator,
     RegularMove,
+    Bot,
+    SchnapsenGamePlayEngine,
 )
 from schnapsen.deck import Card, Suit, Rank
+from schnapsen.bots import MLDataBot
+import random
+import pathlib
 
 # ------------------------------------------**DISCLAIMER**------------------------------------------
 # This code was written by staff at the VU and slightly modified by our team.
@@ -276,3 +281,72 @@ def get_state_feature_vector(perspective: PlayerPerspective) -> list[int]:
     state_feature_list += deck_knowledge_in_consecutive_one_hot_encodings
 
     return state_feature_list
+
+
+def create_custom_replay_memory_dataset(bot1: Bot, bot2: Bot) -> None:
+    """Create offline dataset for training a ML bot.
+
+    Args:
+        bot1, bot2: the bot of your choice.
+
+    """
+    # define replay memory database creation parameters
+    num_of_games: int = 12000
+    replay_memory_dir: str = "ML_replay_memories"
+    replay_memory_filename: str = "random_random_rdeep_10k_games.txt"
+    replay_memory_location = pathlib.Path(replay_memory_dir) / replay_memory_filename
+
+    delete_existing_older_dataset = False
+
+    # check if needed to delete any older versions of the dataset
+    if delete_existing_older_dataset and replay_memory_location.exists():
+        print(
+            f"An existing dataset was found at location '{replay_memory_location}', which will be deleted as selected."
+        )
+        replay_memory_location.unlink()
+
+    # in any case make sure the directory exists
+    replay_memory_location.parent.mkdir(parents=True, exist_ok=True)
+
+    # create new replay memory dataset, according to the behaviour of the provided bots and the provided random seed
+    engine = SchnapsenGamePlayEngine()
+
+    replay_memory_recording_bot_1 = MLDataBot(
+        bot1, replay_memory_location=replay_memory_location
+    )
+    replay_memory_recording_bot_2 = MLDataBot(
+        bot2, replay_memory_location=replay_memory_location
+    )
+
+    passed_first_round = False
+    passed_second_round = False
+
+    bots = [
+        replay_memory_recording_bot_1,
+        replay_memory_recording_bot_2,
+    ]
+
+    bots_idxs = [0, 0]
+
+    for i in range(1, num_of_games + 1):
+        if i % 400 == 0:
+            print(f"Progress: {i}/{num_of_games}")
+        engine.play_game(
+            bots[bots_idxs[0]],
+            bots[bots_idxs[1]],
+            random.Random(i),
+        )
+
+        if i % 4000 == 0 and not passed_first_round:
+            passed_first_round = True
+            bots_idxs[0], bots_idxs[1] = 0, 1
+
+        if i % 8000 == 0 and not passed_second_round:
+            passed_second_round = True
+            bots_idxs[0], bots_idxs[1] = 1, 1
+
+    bots_idxs[0], bots_idxs[1] = 0, 1
+
+    print(
+        f"Replay memory dataset recorder for {num_of_games} games.\nDataset is stored at: {replay_memory_location}"
+    )
