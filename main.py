@@ -1,7 +1,5 @@
 from src.brain.brain import Brain, BrainPlayingBot
-from src.utils.CONSTANTS import GLOBAL_SETTINGS
-
-# Change settings in src.utils.CONSTANTS.py
+from src.utils.CONSTANTS import GLOBAL_SETTINGS  # Change settings in this file
 
 
 def test_brain() -> int:
@@ -23,15 +21,14 @@ def test_brain() -> int:
     return 0
 
 
-# Comment this line if you don't want to train the brain
+# Uncomment this line if you want to train the brain
 # test_brain()
 
-# Comment these lines if you don't want to play games and already have log files to test on
+# Uncomment these lines if you want to play games and/or don't already have log files to test on
 # from src.utils.play_games import play_games
-
 # play_games(300)
 
-# Format logs
+# -----------------Formatting Utils-----------------
 
 import os
 
@@ -49,7 +46,10 @@ def logs_parser(line: str, bot_name: str) -> list[int]:
     ]
 
 
-# Key: bot name, value -> Key: seed, value -> The match information, ending with a win or loss
+# Structure ->
+#              Key: bot name, value ->
+#                                    Key: seed, value ->
+#                                                       The match information, ending with a win or loss
 matches: list[dict[str, dict[int, list[list[list[int] | bool]]]]] = [{}, {}]
 
 
@@ -142,10 +142,11 @@ def file_to_match_dict(log_file, is_bot: bool) -> None:
         line_counter += 8
 
 
-is_human: bool = True
-is_bot: bool = True
+# Specify which one(s) you want to output
+should_display_human: bool = True
+should_display_bot: bool = True
 
-if is_human:
+if should_display_human:
     log_file_paths: list[str] = os.listdir(SETTINGS.HUMAN_LOGS_FILE_PATH)
 
     for log_file_name in log_file_paths:
@@ -157,7 +158,7 @@ if is_human:
                 with open(full_path) as log_file:
                     file_to_match_dict(log_file, False)
 
-if is_bot:
+if should_display_bot:
     log_file_name = os.listdir(SETTINGS.ML_LOGS_FILE_PATH)[-1]
 
     full_path: str = os.path.join(SETTINGS.ML_LOGS_FILE_PATH, log_file_name)
@@ -173,7 +174,70 @@ if is_bot:
 import matplotlib.pyplot as plt
 import numpy as np
 
-# We plot for each seed separately
+# -----------------Printing Utils-----------------
+
+
+def print_avg_mtpr(was_human: bool, bot_name: str) -> None:
+    """Plots the average number of move types per round."""
+
+    global matches
+
+    match_idx: int = 0 if was_human else 1
+
+    avg_results: dict[int, float] = {
+        0: 0.0,
+        1: 0.0,
+        2: 0.0,
+    }
+
+    nr_rounds: int = 0
+
+    for _, match_info in matches[match_idx].get(bot_name, {}).items():
+        nr_rounds += len(match_info)
+
+        avg_results[0] += sum(match[1].count(0) for match in match_info)
+        avg_results[1] += sum(match[1].count(1) for match in match_info)
+        avg_results[2] += sum(match[1].count(2) for match in match_info)
+
+    avg_results[0] = avg_results.get(0, 0) / nr_rounds
+    avg_results[1] = avg_results.get(1, 0) / nr_rounds
+    avg_results[2] = avg_results.get(2, 0) / nr_rounds
+
+    print("Average number of regular moves per round:", round(avg_results.get(0, 0), 3))
+    print(
+        "Average number of trump exchange moves per round:",
+        round(avg_results.get(1, 0), 3),
+    )
+    print(
+        "Average number of marriage moves per round:", round(avg_results.get(2, 0), 3)
+    )
+
+
+def print_avg_win_ratio(was_human: bool, bot_name: str) -> None:
+    """Prints the average win ratio."""
+
+    global matches
+
+    match_idx: int = 0 if was_human else 1
+
+    avg_win: float = 0
+    avg_loss: float = 0
+    nr_matches: int = 0
+
+    for _, match_info in matches[match_idx].get(bot_name, {}).items():
+        nr_matches += len(match_info)
+
+        avg_win += sum(1 for match in match_info if match[4])
+        avg_loss += sum(1 for match in match_info if not match[4])
+
+    avg_win /= nr_matches
+    avg_loss /= nr_matches
+
+    print("Average win rate:", round(avg_win, 3))
+    print("Average loss rate:", round(avg_loss, 3))
+
+
+# -----------------Plotting Utils-----------------
 
 
 def plot_avg_ppr(was_human: bool, bot_name: str) -> None:
@@ -233,42 +297,6 @@ def plot_avg_ppr(was_human: bool, bot_name: str) -> None:
     )
 
     plt.show()
-
-
-def print_avg_mtpr(was_human: bool, bot_name: str) -> None:
-    """Plots the average number of move types per round."""
-
-    global matches
-
-    match_idx: int = 0 if was_human else 1
-
-    avg_results: dict[int, float] = {
-        0: 0.0,
-        1: 0.0,
-        2: 0.0,
-    }
-
-    nr_rounds: int = 0
-
-    for _, match_info in matches[match_idx].get(bot_name, {}).items():
-        nr_rounds += len(match_info)
-
-        avg_results[0] += sum(match[1].count(0) for match in match_info)
-        avg_results[1] += sum(match[1].count(1) for match in match_info)
-        avg_results[2] += sum(match[1].count(2) for match in match_info)
-
-    avg_results[0] = avg_results.get(0, 0) / nr_rounds
-    avg_results[1] = avg_results.get(1, 0) / nr_rounds
-    avg_results[2] = avg_results.get(2, 0) / nr_rounds
-
-    print("Average number of regular moves per round:", round(avg_results.get(0, 0), 3))
-    print(
-        "Average number of trump exchange moves per round:",
-        round(avg_results.get(1, 0), 3),
-    )
-    print(
-        "Average number of marriage moves per round:", round(avg_results.get(2, 0), 3)
-    )
 
 
 def plot_avg_leader_rates(was_human: bool, bot_name: str) -> None:
@@ -393,31 +421,9 @@ def plot_avg_lead_rates(was_human: bool, bot_name: str) -> None:
     plt.show()
 
 
-def print_avg_win_ratio(was_human: bool, bot_name: str) -> None:
-    """Prints the average win ratio."""
+# -----------------Output-----------------
 
-    global matches
-
-    match_idx: int = 0 if was_human else 1
-
-    avg_win: float = 0
-    avg_loss: float = 0
-    nr_matches: int = 0
-
-    for _, match_info in matches[match_idx].get(bot_name, {}).items():
-        nr_matches += len(match_info)
-
-        avg_win += sum(1 for match in match_info if match[4])
-        avg_loss += sum(1 for match in match_info if not match[4])
-
-    avg_win /= nr_matches
-    avg_loss /= nr_matches
-
-    print("Average win rate:", round(avg_win, 3))
-    print("Average loss rate:", round(avg_loss, 3))
-
-
-if is_human:
+if should_display_human:
     # Printing
     print("#                     Human Stats                       #\n")
 
@@ -447,7 +453,7 @@ if is_human:
 
     print()
 
-if is_bot:
+if should_display_bot:
     # Printing
     print("#                    Brainbot Stats                     #\n")
 
