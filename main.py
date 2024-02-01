@@ -220,9 +220,15 @@ def plot_avg_ppr(was_human: bool, bot_name: str) -> None:
     # Add a legend
     plt.legend()
 
+    save_path: str = "human"
+
+    if not was_human:
+        model_name: str = SETTINGS.MODEL_SAVE_PATH.split("/")[1]
+        save_path = f"bot/{model_name}"
+
     # Save image
     plt.savefig(
-        f'docs/images/{"human" if was_human else "bot"}/{bot_name}_avg_ppr.png',
+        f"docs/images/{save_path}/{bot_name}_avg_ppr.png",
         bbox_inches="tight",
     )
 
@@ -310,9 +316,15 @@ def plot_avg_leader_rates(was_human: bool, bot_name: str) -> None:
     # Add a legend
     plt.legend()
 
+    save_path: str = "human"
+
+    if not was_human:
+        model_name: str = SETTINGS.MODEL_SAVE_PATH.split("/")[1]
+        save_path = f"bot/{model_name}"
+
     # Save image
     plt.savefig(
-        f'docs/images/{"human" if was_human else "bot"}/{bot_name}_avg_lr.png',
+        f"docs/images/{save_path}/{bot_name}_avg_lr.png",
         bbox_inches="tight",
     )
 
@@ -366,9 +378,15 @@ def plot_avg_lead_rates(was_human: bool, bot_name: str) -> None:
     # Add a legend
     plt.legend()
 
+    save_path: str = "human"
+
+    if not was_human:
+        model_name: str = SETTINGS.MODEL_SAVE_PATH.split("/")[1]
+        save_path = f"bot/{model_name}"
+
     # Save image
     plt.savefig(
-        f'docs/images/{"human" if was_human else "bot"}/{bot_name}_avg_ldr.png',
+        f"docs/images/{save_path}/{bot_name}_avg_ldr.png",
         bbox_inches="tight",
     )
 
