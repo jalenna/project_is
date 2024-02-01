@@ -6,7 +6,7 @@ Our project aims to recreate and assess the relevant brain regions that contribu
 
 ## Getting started
 - Using [VSCode](https://code.visualstudio.com/): https://code.visualstudio.com/docs/sourcecontrol/intro-to-git
-- From Zip: Download it using the green `<> code` button above and extract the contents to a separate folder. Then enter that folder and proceed
+- From Zip: Download this repository using the green `<> code` button above and extract the contents to a separate folder. Then enter that folder and proceed
 
 Open a terminal and run `python main.py`. Alternatively, in VSCode, right-click `main.py` and click `Run Python File in Terminal`.
 
