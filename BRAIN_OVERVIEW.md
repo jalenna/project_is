@@ -53,8 +53,8 @@ Spiking neural networks, a type of neuromorphic model, operate in an event-drive
 Ensembles combine multiple models to improve overall performance.
 Each model in the ensemble can focus on different aspects of the problem, contributing to a more holistic and parallelized approach.
 
-## Why we chose INSERT_NN_TECHNIQUE_HERE
-#TODO Based on the information above...
+## Why we chose specific NNs
+Each layer in the network has been commented to support our reasoning for choosing that NN. You can find these layers in [regions](src/brain/regions) and if you want to see them being used, check out [brain.py](src/brain/brain.py).
 
 ## Sources
 - [Prefrontal Cortex](https://en.wikipedia.org/wiki/Prefrontal_cortex)
