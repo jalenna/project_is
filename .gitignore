@@ -11,5 +11,3 @@ random_random_rdeep_10k_games.txt
 # checkpoint
 # *.keras
 log_**
-# Local tests
-pr1
