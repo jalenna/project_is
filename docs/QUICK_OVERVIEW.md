@@ -7,6 +7,5 @@ We're following the [Black Python style guide](https://black.readthedocs.io/en/s
 - class `Region`:
     + Base class for all regions of the brain
     + Contains all relevant methods _| Keep in mind that the implementation **will** vary accross different regions._
-- function `main`:
+- module `main`:
     + Main entry point of the application
-    + Application set up is done within this function
